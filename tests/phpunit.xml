@@ -1,0 +1,9 @@
+<phpunit>
+    <testsuites>
+
+        <testsuite name="Curl Tests">
+            <file>./CurlTest.php</file>
+        </testsuite>
+
+    </testsuites>
+</phpunit>
