@@ -1,0 +1,9 @@
+{
+    "name": "ryanknu/zultools",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "ZTools\\": "src/"
+        }
+    }
+}
