@@ -13,9 +13,6 @@ class CurlResponse
     private $error_number;
     private $log_class;
     private $headers = array();
-    private $cookies = array();
-    private $cookie_jar;
-    private $cookie_jar_t;
 
     public function __get($key) {
         return $this->$key;
@@ -69,15 +66,6 @@ class CurlResponse
                 $parts = explode(':', $line, 2);
                 if ( count($parts) === 2 ) {
                     $this->headers[$parts[0]] = $parts[1];
-                    if ( strtolower($parts[0]) === 'set-cookie' ) {
-                        $cookie_kv = strstr($parts[1], ';', true);
-                        list($cookie_k, $cookie_v) = explode('=', $cookie_kv, 2);
-                        $this->cookies[trim($cookie_k)] = trim($cookie_v);
-                        if ( $this->cookie_jar ) {
-                            $this->cookie_jar->addCookie(trim($cookie_k), trim($cookie_v));
-                            $this->cookie_jar_t->save($this->cookie_jar);
-                        }
-                    }
                 }
             }
         }
@@ -113,21 +101,11 @@ class CurlResponse
 
     public function setRequest(Curl $r) {
         $this->request = $r;
-        
-        if ( $r->hasCookieJar() ) {
-            $this->cookie_jar_t = $r->getCookieJarTable();
-            $this->cookie_jar = $r->getCookieJar();
-        }
     }
     
     public function getRequest()
     {
         return $this->request;
-    }
-
-    public function getCookieArray()
-    {
-        return $this->cookies;
     }
 
     public function getTotalTimeMs() {
