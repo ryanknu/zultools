@@ -210,12 +210,6 @@ class Curl
             }
         }
         
-        if ( $this->cookie_jar ) {
-            $this->addHeaders([
-                'Cookie: ' . $this->cookie_jar->prepareCookies(),
-            ]);
-        }
-        
         $ch = curl_init();
         $fp = false; // file pointer for file downloads
         $hp = false; // file pointer for headers
